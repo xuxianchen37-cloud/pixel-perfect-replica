@@ -3,7 +3,7 @@ import { buildings, getCourse } from "@/data/campus";
 
 export interface AiReply {
   text: string;
-  buildingId?: string;
+  buildingId?: string | undefined;
 }
 
 /**
