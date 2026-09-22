@@ -429,7 +429,9 @@ export const getCourse = (id: string) => courses.find((c) => c.id === id);
 
 /** 把 classroomId（例如 B004-301）转成可读地点，例如 第四教学楼301 */
 export function classroomLabel(classroomId: string) {
-  const [buildingId, room] = classroomId.split("-");
+  const parts = classroomId.split("-");
+  const buildingId = parts[0] ?? "";
+  const room = parts.slice(1).join("-");
   const building = getBuilding(buildingId);
   return building ? `${building.name}${room}` : classroomId;
 }
