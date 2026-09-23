@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   ArrowRight,
   Bell,
@@ -74,7 +74,7 @@ function Dashboard() {
     <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:py-10">
       <header className="mb-8">
         <h1 className="text-2xl font-semibold tracking-tight sm:text-3xl">
-          {greeting()}，同学 👋
+          {greeting}，同学 👋
         </h1>
         <p className="mt-2 text-muted-foreground">今天也是高效校园生活的一天。</p>
       </header>
@@ -122,10 +122,7 @@ function Dashboard() {
         <Card className="shadow-[var(--shadow-card)] lg:col-span-2">
           <CardHeader className="flex-row items-center justify-between space-y-0">
             <CardTitle className="text-base">今日课程</CardTitle>
-            <Link
-              to="/schedule"
-              className="text-sm text-primary hover:underline"
-            >
+            <Link to="/schedule" className="text-sm text-primary hover:underline">
               全部课表
             </Link>
           </CardHeader>
