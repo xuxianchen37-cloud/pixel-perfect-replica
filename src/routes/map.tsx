@@ -16,9 +16,8 @@ import { buildingTypeLabel, buildings, getBuilding, type Building } from "@/data
 import { calculateRoute, searchBuildings } from "@/services/mapService";
 
 export const Route = createFileRoute("/map")({
-  validateSearch: (search: Record<string, unknown>) => ({
-    to: typeof search["to"] === "string" ? (search["to"] as string) : undefined,
-  }),
+  validateSearch: (search: Record<string, unknown>): { to?: string } =>
+    typeof search["to"] === "string" ? { to: search["to"] } : {},
   head: () => ({
     meta: [
       { title: "智慧地图 · CampusMind" },

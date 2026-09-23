@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as BuilderRouteImport } from './routes/builder'
 import { Route as MapRouteImport } from './routes/map'
 import { Route as NoticesRouteImport } from './routes/notices'
 import { Route as ScheduleRouteImport } from './routes/schedule'
@@ -18,6 +19,11 @@ import { Route as StudyRouteImport } from './routes/study'
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BuilderRoute = BuilderRouteImport.update({
+  id: '/builder',
+  path: '/builder',
   getParentRoute: () => rootRouteImport,
 } as any)
 const MapRoute = MapRouteImport.update({
@@ -43,6 +49,7 @@ const StudyRoute = StudyRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/builder': typeof BuilderRoute
   '/map': typeof MapRoute
   '/notices': typeof NoticesRoute
   '/schedule': typeof ScheduleRoute
@@ -50,6 +57,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/builder': typeof BuilderRoute
   '/map': typeof MapRoute
   '/notices': typeof NoticesRoute
   '/schedule': typeof ScheduleRoute
@@ -58,6 +66,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/builder': typeof BuilderRoute
   '/map': typeof MapRoute
   '/notices': typeof NoticesRoute
   '/schedule': typeof ScheduleRoute
@@ -65,14 +74,16 @@ export interface FileRoutesById {
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/map' | '/notices' | '/schedule' | '/study'
+  fullPaths: '/' | '/builder' | '/map' | '/notices' | '/schedule' | '/study'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/map' | '/notices' | '/schedule' | '/study'
-  id: '__root__' | '/' | '/map' | '/notices' | '/schedule' | '/study'
+  to: '/' | '/builder' | '/map' | '/notices' | '/schedule' | '/study'
+  id:
+    '__root__' | '/' | '/builder' | '/map' | '/notices' | '/schedule' | '/study'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  BuilderRoute: typeof BuilderRoute
   MapRoute: typeof MapRoute
   NoticesRoute: typeof NoticesRoute
   ScheduleRoute: typeof ScheduleRoute
@@ -86,6 +97,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/builder': {
+      id: '/builder'
+      path: '/builder'
+      fullPath: '/builder'
+      preLoaderRoute: typeof BuilderRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/map': {
@@ -121,6 +139,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  BuilderRoute: BuilderRoute,
   MapRoute: MapRoute,
   NoticesRoute: NoticesRoute,
   ScheduleRoute: ScheduleRoute,

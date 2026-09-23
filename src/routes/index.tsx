@@ -43,8 +43,7 @@ const quickLinks = [
   { to: "/notices", label: "AI通知", icon: Bell },
 ] as const;
 
-function greeting() {
-  const h = new Date().getHours();
+function greetingFor(h: number) {
   if (h < 6) return "凌晨好";
   if (h < 11) return "早上好";
   if (h < 14) return "中午好";
@@ -55,6 +54,9 @@ function greeting() {
 function Dashboard() {
   const todayCourses = getTodaySchedule();
   const topSpace = recommendStudySpace()[0];
+  const [hour, setHour] = useState<number | null>(null);
+  useEffect(() => setHour(new Date().getHours()), []);
+  const greeting = hour === null ? "你好" : greetingFor(hour);
 
   const [question, setQuestion] = useState("");
   const [loading, setLoading] = useState(false);

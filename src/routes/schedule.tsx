@@ -7,9 +7,8 @@ import { slotTimes, weekDays, getCourse, classroomLabel } from "@/data/campus";
 import { getWeekSchedule } from "@/services/scheduleService";
 
 export const Route = createFileRoute("/schedule")({
-  validateSearch: (search: Record<string, unknown>) => ({
-    course: typeof search["course"] === "string" ? (search["course"] as string) : undefined,
-  }),
+  validateSearch: (search: Record<string, unknown>): { course?: string } =>
+    typeof search["course"] === "string" ? { course: search["course"] } : {},
   head: () => ({
     meta: [
       { title: "智慧课表 · CampusMind" },
