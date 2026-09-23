@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   ArrowRight,
   Bell,
@@ -43,8 +43,7 @@ const quickLinks = [
   { to: "/notices", label: "AI通知", icon: Bell },
 ] as const;
 
-function greeting() {
-  const h = new Date().getHours();
+function greetingFor(h: number) {
   if (h < 6) return "凌晨好";
   if (h < 11) return "早上好";
   if (h < 14) return "中午好";
@@ -55,6 +54,9 @@ function greeting() {
 function Dashboard() {
   const todayCourses = getTodaySchedule();
   const topSpace = recommendStudySpace()[0];
+  const [hour, setHour] = useState<number | null>(null);
+  useEffect(() => setHour(new Date().getHours()), []);
+  const greeting = hour === null ? "你好" : greetingFor(hour);
 
   const [question, setQuestion] = useState("");
   const [loading, setLoading] = useState(false);
@@ -72,7 +74,7 @@ function Dashboard() {
     <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:py-10">
       <header className="mb-8">
         <h1 className="text-2xl font-semibold tracking-tight sm:text-3xl">
-          {greeting()}，同学 👋
+          {greeting}，同学 👋
         </h1>
         <p className="mt-2 text-muted-foreground">今天也是高效校园生活的一天。</p>
       </header>
@@ -120,10 +122,7 @@ function Dashboard() {
         <Card className="shadow-[var(--shadow-card)] lg:col-span-2">
           <CardHeader className="flex-row items-center justify-between space-y-0">
             <CardTitle className="text-base">今日课程</CardTitle>
-            <Link
-              to="/schedule"
-              className="text-sm text-primary hover:underline"
-            >
+            <Link to="/schedule" className="text-sm text-primary hover:underline">
               全部课表
             </Link>
           </CardHeader>
