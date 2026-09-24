@@ -9,7 +9,18 @@ export interface School {
   memberLabel: string;
 }
 
-export type BuildingType = "teaching" | "library" | "lab" | "sports" | "canteen" | "dorm";
+export type BuildingType =
+  | "teaching"
+  | "library"
+  | "lab"
+  | "laboratory"
+  | "sports"
+  | "canteen"
+  | "dorm"
+  | "dormitory"
+  | "service"
+  | "office"
+  | "gate";
 
 export interface Building {
   id: string;

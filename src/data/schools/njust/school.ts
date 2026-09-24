@@ -14,6 +14,11 @@ export const buildingTypeLabels: Record<BuildingType, string> = {
   sports: "体育场馆",
   canteen: "餐饮",
   dorm: "生活区",
+  laboratory: "实验楼",
+  dormitory: "宿舍",
+  service: "生活服务",
+  office: "办公",
+  gate: "校门",
 };
 
 export const weekDays = ["周一", "周二", "周三", "周四", "周五"];

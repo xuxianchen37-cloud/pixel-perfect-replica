@@ -17,6 +17,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Progress } from "@/components/ui/progress";
 import { buildSteps, importCampusData, type CampusDraft } from "@/services/campusBuilderService";
+import { demoImport } from "@/data/campus";
 
 export const Route = createFileRoute("/builder")({
   head: () => ({
@@ -54,14 +55,7 @@ function BuilderPage() {
   }
 
   function loadDemo() {
-    setDraft({
-      schoolName: "南京理工大学",
-      shortName: "NJUST",
-      mapFile: "njust-campus-map.png",
-      buildingFile: "njust-buildings.csv",
-      timetableFile: "njust-timetable-2026.csv",
-      floorPlanFile: "building-04-floors.pdf",
-    });
+    setDraft({ ...demoImport });
   }
 
   async function run() {
@@ -93,7 +87,7 @@ function BuilderPage() {
             <Label className="mb-1.5 block text-xs text-muted-foreground">学校名称</Label>
             <Input
               value={draft.schoolName}
-              placeholder="例如 南京理工大学"
+              placeholder={`例如 ${demoImport.schoolName}`}
               onChange={(e) => setDraft((d) => ({ ...d, schoolName: e.target.value }))}
             />
           </div>
@@ -101,7 +95,7 @@ function BuilderPage() {
             <Label className="mb-1.5 block text-xs text-muted-foreground">英文简称</Label>
             <Input
               value={draft.shortName}
-              placeholder="例如 NJUST"
+              placeholder={`例如 ${demoImport.shortName}`}
               onChange={(e) => setDraft((d) => ({ ...d, shortName: e.target.value }))}
             />
           </div>

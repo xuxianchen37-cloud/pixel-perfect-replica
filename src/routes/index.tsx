@@ -16,6 +16,7 @@ import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { getTodaySchedule } from "@/services/scheduleService";
 import { recommendStudySpace } from "@/services/studyService";
+import { getImportantNotice } from "@/services/noticeService";
 import { askCampusAI, type AiReply } from "@/lib/aiAssistant";
 
 export const Route = createFileRoute("/")({
@@ -54,6 +55,7 @@ function greetingFor(h: number) {
 function Dashboard() {
   const todayCourses = getTodaySchedule();
   const topSpace = recommendStudySpace()[0];
+  const importantNotice = getImportantNotice();
   const [hour, setHour] = useState<number | null>(null);
   useEffect(() => setHour(new Date().getHours()), []);
   const greeting = hour === null ? "你好" : greetingFor(hour);
@@ -166,8 +168,14 @@ function Dashboard() {
                 className="block rounded-xl border border-border p-4 transition-colors hover:bg-secondary"
               >
                 <Badge className="bg-destructive text-destructive-foreground">重要</Badge>
-                <p className="mt-2 font-medium">四六级报名即将截止</p>
-                <p className="mt-1 text-sm text-muted-foreground">截止时间：10月8日 18:00</p>
+                <p className="mt-2 font-medium">
+                  {importantNotice?.analysis?.title ?? importantNotice?.title}即将截止
+                </p>
+                {importantNotice?.analysis && (
+                  <p className="mt-1 text-sm text-muted-foreground">
+                    截止时间：{importantNotice.analysis.deadline}
+                  </p>
+                )}
               </Link>
             </CardContent>
           </Card>

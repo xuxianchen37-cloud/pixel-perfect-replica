@@ -1,5 +1,6 @@
 import { getTodaySchedule } from "@/services/scheduleService";
-import { buildings, getCourse } from "@/data/campus";
+import { recommendStudySpace } from "@/services/studyService";
+import { buildingIdOf, buildings, campusDefaults, getBuilding } from "@/data/campus";
 
 export interface AiReply {
   text: string;
@@ -7,7 +8,7 @@ export interface AiReply {
 }
 
 /**
- * 校园问答。第一版返回基于 mock 数据的规则式回答，
+ * 校园问答。第一版基于当前学校数据包做规则式回答，
  * 后续替换为真实 LLM + 校园知识库检索。
  */
 export async function askCampusAI(question: string): Promise<AiReply> {
@@ -22,27 +23,32 @@ export async function askCampusAI(question: string): Promise<AiReply> {
     };
   }
 
-  if (q.includes("高数") || q.includes("第一节") || q.includes("课")) {
-    const first = getTodaySchedule()[0];
-    if (first) {
-      const course = getCourse(first.entry.courseId);
-      const buildingId = course?.classroomId.split("-")[0];
+  const first = getTodaySchedule()[0];
+  const courseReply = (): AiReply | null =>
+    first
+      ? {
+          text: `你的第一节${first.course.name}在${first.location}，${first.time}上课，距离当前位置约8分钟。`,
+          buildingId: buildingIdOf(first.course.classroomId),
+        }
+      : null;
+
+  if (q.includes("第一节") || q.includes("课")) {
+    const r = courseReply();
+    if (r) return r;
+  }
+
+  if (q.includes("自习") || q.includes("空教室")) {
+    const s = recommendStudySpace()[0];
+    if (s) {
       return {
-        text: `你的第一节${first.course.name}在${first.location}，${first.time}上课，距离当前位置约8分钟。`,
-        buildingId,
+        text: `推荐${s.name}，${s.availableFrom} - ${s.availableTo} 空闲，${s.tags.join("、")}，距离约${s.distanceMeters}米。`,
+        buildingId: s.buildingId,
       };
     }
   }
 
-  if (q.includes("自习") || q.includes("空教室")) {
-    return {
-      text: "推荐第四教学楼302，14:00 - 17:00 空闲，安静且有插座，距离约340米。",
-      buildingId: "B004",
-    };
-  }
-
-  return {
-    text: "你的第一节高等数学在第四教学楼301，距离当前位置约8分钟。",
-    buildingId: "B004",
-  };
+  const fallback = courseReply();
+  if (fallback) return fallback;
+  const focus = getBuilding(campusDefaults.focusBuildingId);
+  return { text: "你可以问我建筑位置、今天的课程或空闲教室。", buildingId: focus?.id };
 }

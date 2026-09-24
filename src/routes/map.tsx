@@ -12,7 +12,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { buildingTypeLabel, buildings, getBuilding, type Building } from "@/data/campus";
+import { buildingTypeLabel, buildings, campusDefaults, getBuilding, type Building } from "@/data/campus";
 import { calculateRoute, searchBuildings } from "@/services/mapService";
 
 export const Route = createFileRoute("/map")({
@@ -36,9 +36,14 @@ const typeColor: Record<Building["type"], string> = {
   teaching: "bg-primary",
   library: "bg-violet-500",
   lab: "bg-cyan-500",
+  laboratory: "bg-cyan-500",
   sports: "bg-emerald-500",
   canteen: "bg-amber-500",
+  service: "bg-amber-500",
   dorm: "bg-rose-500",
+  dormitory: "bg-rose-500",
+  office: "bg-slate-500",
+  gate: "bg-zinc-500",
 };
 
 function MapPage() {
@@ -46,8 +51,8 @@ function MapPage() {
   const navigate = useNavigate({ from: Route.fullPath });
 
   const [keyword, setKeyword] = useState("");
-  const [fromId, setFromId] = useState("B050");
-  const selectedId = to ?? "B004";
+  const [fromId, setFromId] = useState(campusDefaults.originBuildingId);
+  const selectedId = to ?? campusDefaults.focusBuildingId;
   const selected = getBuilding(selectedId) ?? buildings[0]!;
 
   const results = useMemo(() => searchBuildings(keyword), [keyword]);
@@ -194,7 +199,7 @@ function MapPage() {
                 <Input
                   className="pl-9"
                   value={keyword}
-                  placeholder="输入建筑名称，如 图书馆"
+                  placeholder={`输入建筑名称，如 ${buildings[0]?.name ?? ""}`}
                   onChange={(e) => setKeyword(e.target.value)}
                 />
               </div>
@@ -229,7 +234,7 @@ function MapPage() {
             <CardContent className="space-y-3 text-sm">
               <div className="flex flex-wrap gap-2">
                 <Badge variant="secondary">{buildingTypeLabel[selected.type]}</Badge>
-                <Badge variant="outline">{selected.floors} 层</Badge>
+                <Badge variant="outline">{selected.floorCount} 层</Badge>
               </div>
               <p className="flex items-center gap-2 text-muted-foreground">
                 <Clock className="h-4 w-4" />开放时间 {selected.openTime} - {selected.closeTime}
