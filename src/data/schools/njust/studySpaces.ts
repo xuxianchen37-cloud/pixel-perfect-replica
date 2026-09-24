@@ -3,7 +3,7 @@ import type { StudySpace } from "@/data/types";
 export const studySpaces: StudySpace[] = [
   {
     id: "S001",
-    classroomId: "B004-302",
+    classroomId: "B011-302",
     status: "空闲",
     availableFrom: "14:00",
     availableTo: "17:00",
@@ -15,7 +15,7 @@ export const studySpaces: StudySpace[] = [
   },
   {
     id: "S002",
-    classroomId: "B002-205",
+    classroomId: "B012-205",
     status: "空闲",
     availableFrom: "14:00",
     availableTo: "16:00",
@@ -27,7 +27,7 @@ export const studySpaces: StudySpace[] = [
   },
   {
     id: "S003",
-    classroomId: "B010-3A",
+    classroomId: "B001-3A",
     status: "空闲",
     availableFrom: "13:30",
     availableTo: "22:00",
@@ -39,7 +39,7 @@ export const studySpaces: StudySpace[] = [
   },
   {
     id: "S004",
-    classroomId: "B001-401",
+    classroomId: "B013-401",
     status: "即将空闲",
     availableFrom: "15:00",
     availableTo: "21:30",

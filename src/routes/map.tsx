@@ -229,7 +229,7 @@ function MapPage() {
             <CardContent className="space-y-3 text-sm">
               <div className="flex flex-wrap gap-2">
                 <Badge variant="secondary">{buildingTypeLabel[selected.type]}</Badge>
-                <Badge variant="outline">{selected.floors} 层</Badge>
+                <Badge variant="outline">{selected.floorCount} 层</Badge>
               </div>
               <p className="flex items-center gap-2 text-muted-foreground">
                 <Clock className="h-4 w-4" />开放时间 {selected.openTime} - {selected.closeTime}
