@@ -87,7 +87,7 @@ function BuilderPage() {
             <Label className="mb-1.5 block text-xs text-muted-foreground">学校名称</Label>
             <Input
               value={draft.schoolName}
-              placeholder="例如 南京理工大学"
+              placeholder={`例如 ${demoImport.schoolName}`}
               onChange={(e) => setDraft((d) => ({ ...d, schoolName: e.target.value }))}
             />
           </div>
@@ -95,7 +95,7 @@ function BuilderPage() {
             <Label className="mb-1.5 block text-xs text-muted-foreground">英文简称</Label>
             <Input
               value={draft.shortName}
-              placeholder="例如 NJUST"
+              placeholder={`例如 ${demoImport.shortName}`}
               onChange={(e) => setDraft((d) => ({ ...d, shortName: e.target.value }))}
             />
           </div>

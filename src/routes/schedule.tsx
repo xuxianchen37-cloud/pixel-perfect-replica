@@ -3,7 +3,7 @@ import { Clock, MapPin, Navigation, Sparkles, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { slotTimes, weekDays, getCourse, classroomLabel } from "@/data/campus";
+import { slotTimes, weekDays, getCourse, classroomLabel, buildingIdOf } from "@/data/campus";
 import { getWeekSchedule } from "@/services/scheduleService";
 
 export const Route = createFileRoute("/schedule")({
@@ -54,7 +54,7 @@ function SchedulePage() {
   const week = getWeekSchedule();
 
   const selected = courseId ? getCourse(courseId) : undefined;
-  const selectedBuildingId = selected?.classroomId.split("-")[0] ?? "";
+  const selectedBuildingId = selected ? buildingIdOf(selected.classroomId) : "";
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:py-10">
