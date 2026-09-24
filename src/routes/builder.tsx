@@ -17,6 +17,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Progress } from "@/components/ui/progress";
 import { buildSteps, importCampusData, type CampusDraft } from "@/services/campusBuilderService";
+import { demoImport } from "@/data/campus";
 
 export const Route = createFileRoute("/builder")({
   head: () => ({
@@ -54,14 +55,7 @@ function BuilderPage() {
   }
 
   function loadDemo() {
-    setDraft({
-      schoolName: "南京理工大学",
-      shortName: "NJUST",
-      mapFile: "njust-campus-map.png",
-      buildingFile: "njust-buildings.csv",
-      timetableFile: "njust-timetable-2026.csv",
-      floorPlanFile: "building-04-floors.pdf",
-    });
+    setDraft({ ...demoImport });
   }
 
   async function run() {

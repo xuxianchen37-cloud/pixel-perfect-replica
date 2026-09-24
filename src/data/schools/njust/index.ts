@@ -1,6 +1,7 @@
 import type { CampusDataset } from "@/data/types";
 import { buildingTypeLabels, demoImport, school, weekDays } from "./school";
-import { buildings, classrooms, defaults, floors } from "./buildings";
+import { buildings } from "./buildings";
+import { classrooms, defaults, floors } from "./rooms";
 import { courses, slots, timetable } from "./courses";
 import { notices } from "./notices";
 import { studySpaces } from "./studySpaces";
